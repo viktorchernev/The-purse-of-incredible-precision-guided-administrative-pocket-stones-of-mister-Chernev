@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -44,11 +44,13 @@ namespace InsertTextFilesToSQL
 
                             MySqlCommand cmd = new MySqlCommand();
                             cmd.Connection = connection;
-                            cmd.CommandText = "INSERT INTO mainspace(filename, content) VALUES('" + cur + "', '" + text + "')";
-                            cmd.Prepare();
+                            cmd.CommandText = 
+                                "INSERT INTO " + argd["table"] + "(" 
+                                + argd["filename"] + ", " 
+                                + argd["filecontent"] + 
+                                ") VALUES('" + cur + "', '" + text + "')";
 
-                            cmd.Parameters.AddWithValue("?filename", cur);
-                            cmd.Parameters.AddWithValue("?content", text);
+                            cmd.Prepare();
                             int res = cmd.ExecuteNonQuery();
 
                             string message;
